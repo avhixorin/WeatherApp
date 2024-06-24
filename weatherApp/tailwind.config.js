@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       backgroundImage:{
-        'page-bg': 'url("../src/assets/rainy.jpg")'
+        'page-bg': 'url("../src/assets/dark-clouds.jpg")'
       },
       height:{
         '90':'90%'

@@ -1,10 +1,11 @@
-import { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import WeatherDataContext from './WeatherDataContext';
 
 const WeatherDataContextProvider = ({ children }) => {
   const [currentData, setCurrentData] = useState({ latitude: null, longitude: null });
   const [weatherData, setWeatherData] = useState({});
   const [searchValue, setSearchValue] = useState('');
+  const [aqiData, setAqiData] = useState({});
   const [searchCityLat, setSearchCityLat] = useState(19.4356603);
   const [searchCityLon, setSearchCityLon] = useState(72.8160861);
   const weatherApiKey = '9bc95084cf36e36a4f031a0a9debbb41';
@@ -43,6 +44,20 @@ const WeatherDataContextProvider = ({ children }) => {
     }
   };
 
+  const fetchAqiData = async (lat, lon) => {
+    const aqiApiUrl = `http://api.openweathermap.org/data/2.5/air_pollution/history?lat=${lat}&lon=${lon}&start=1606223802&end=1606482999&appid=${weatherApiKey}`;
+    try {
+      const response = await fetch(aqiApiUrl);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      setAqiData(data);
+    } catch (error) {
+      console.error('Error fetching AQI data:', error);
+    }
+  };
+
   useEffect(() => {
     getCurrentLocation();
   }, []);
@@ -50,6 +65,7 @@ const WeatherDataContextProvider = ({ children }) => {
   useEffect(() => {
     if (currentData.latitude && currentData.longitude) {
       fetchWeatherData(currentData.latitude, currentData.longitude);
+      fetchAqiData(currentData.latitude, currentData.longitude);
     }
   }, [currentData]);
 
@@ -63,20 +79,18 @@ const WeatherDataContextProvider = ({ children }) => {
             setSearchCityLon(data[0].lon);
           } else {
             console.log('City not found');
-            // Handle case when no cities match the search
           }
         })
         .catch(error => {
           console.error('Error fetching city data:', error);
-          // Handle error fetching city data
         });
     }
   }, [searchValue]);
 
   useEffect(() => {
-    // Fetch weather data only when both searchCityLat and searchCityLon are updated
     if (searchCityLat !== null && searchCityLon !== null) {
       fetchWeatherData(searchCityLat, searchCityLon);
+      fetchAqiData(searchCityLat, searchCityLon);
     }
   }, [searchCityLat, searchCityLon]);
 
@@ -87,8 +101,9 @@ const WeatherDataContextProvider = ({ children }) => {
     searchValue,
     setSearchValue,
     searchCityLat,
-    searchCityLon
-  }), [currentData, weatherData, searchValue, searchCityLat, searchCityLon]);
+    searchCityLon,
+    aqiData
+  }), [currentData, weatherData, searchValue, searchCityLat, searchCityLon, aqiData]);
 
   return (
     <WeatherDataContext.Provider value={contextValue}>
