@@ -46,6 +46,8 @@ const CurrentData = () => {
         return <CloudySvg />;
       case 'shower rain':
       case 'rain':
+      case 'moderate rain':
+      case 'heavy intensity rain':
         return <RainySvg />;
       case 'thunderstorm':
         return <ThunderSvg />;
@@ -58,22 +60,22 @@ const CurrentData = () => {
   };
 
   return (
-    <div className='w-full h-full flex flex-col p-[25%] gap-4'>
-      <div className='flex flex-row gap-6'>
-        <div className='text-8xl text-white font-bold flex items-center'>
-          {temp ? `${Math.floor(temp)}°C` : 'Loading...'}
+    <div className='w-[60%] h-[60%] flex flex-col items-center justify-center gap-6 bg-white bg-opacity-5 backdrop-blur-lg rounded-2xl px-auto'>
+      <div className='flex flex-row w-4/5 items-center justify-between'>
+        <div className='text-8xl text-white font-bold flex justify-start items-center'>
+            {temp ? `${Math.floor(temp)}°C` : 'Loading...'}    
         </div>
-        <div className='flex justify-center items-center'>
+        <div className='h-full w-full flex justify-center items-end'>
           {getWeatherIcon(description)}
         </div>
       </div>
-      <div className='text-white text-3xl font-semibold'>
+      <div className='w-4/5 text-white text-3xl font-semibold'>
         <p>{name || 'Loading...'}, {country || 'Loading...'}</p>
       </div>
-      <div className='text-white text-lg'>
+      <div className='w-4/5 text-white text-lg'>
         <p>Feels like: {feels_like ? `${Math.floor(feels_like)}°C` : '...'} | Humidity: {humidity || '...'}% | Wind: {speed ? `${speed} m/s` : '...'}</p>
       </div>
-      <div className='text-white text-xl'>
+      <div className='w-4/5 text-white text-xl'>
         <p>{description} | AQI: {aqi !== null ? aqi : '...'}</p>
       </div>
     </div>
