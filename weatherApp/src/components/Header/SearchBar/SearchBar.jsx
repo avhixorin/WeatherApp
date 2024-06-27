@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import WeatherDataContext from '../../contexts/WeatherDataContext';
+import WeatherDataContext from '../../contexts/weatherDataContexts/WeatherDataContext';
 import { SearchContext } from '../../contexts/searchContexts/SearchContext';
 import ToggleSwitch from '../ToggleSwitch/ToggleSwitch';
 

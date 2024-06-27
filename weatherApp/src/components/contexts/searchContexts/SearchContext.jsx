@@ -1,7 +1,7 @@
 // SearchContext.js
 import { createContext, useState, useCallback, useEffect, useMemo, useContext } from 'react';
 import debounce from 'lodash/debounce';
-import weatherDataContext from '../WeatherDataContext';
+import WeatherDataContext from '../weatherDataContexts/WeatherDataContext';
 
 const SearchContext = createContext();
 
@@ -36,7 +36,7 @@ const SearchProvider = ({ children }) => {
       setShowSuggestions(false);
     }
   }, [inputData, debouncedFetchCityData]);
-  const {setSearchValue} = useContext(weatherDataContext)
+  const {setSearchValue} = useContext(WeatherDataContext)
   const handleSuggestionClick = (city) => {
     setInputData(city);
     setShowSuggestions(false);

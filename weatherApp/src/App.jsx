@@ -3,7 +3,7 @@ import CurrentData from "./components/CurrentData/CurrentData.jsx"
 import ForcastData from "./components/ForcastData/ForcastData.jsx"
 import Header from "./components/Header/Header.jsx"
 import { SearchProvider } from "./components/contexts/searchContexts/SearchContext.jsx"
-import WeatherDataContextProvider from "./components/contexts/WeatherDataContextProvider.jsx"
+import WeatherDataContextProvider from "./components/contexts/weatherDataContexts/WeatherDataContextProvider.jsx"
 
 
 

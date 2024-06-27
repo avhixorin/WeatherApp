@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import WeatherDataContext from "../contexts/WeatherDataContext";
+import WeatherDataContext from "../contexts/weatherDataContexts/WeatherDataContext";
 import { WindySvg, SunnySvg, HazySvg, ThunderSvg, CloudySvg, RainySvg } from "../SvgComponents";
 
 const CurrentData = () => {
