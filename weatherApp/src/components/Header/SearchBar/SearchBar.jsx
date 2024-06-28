@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import WeatherDataContext from '../../contexts/weatherDataContexts/WeatherDataContext';
 import { SearchContext } from '../../contexts/searchContexts/SearchContext';
-import ToggleSwitch from '../ToggleSwitch/ToggleSwitch';
+
 
 function SearchBar() {
   const { setSearchValue } = useContext(WeatherDataContext);
@@ -10,14 +10,12 @@ function SearchBar() {
     setInputData,
     cityData,
     showSuggestions,
-    handleSuggestionClick,
-    handleSearchSubmit
+    handleSuggestionClick
   } = useContext(SearchContext);
 
   const handleSearch = (e) => {
     e.preventDefault();
     setSearchValue(inputData);
-    handleSearchSubmit(e);
     setInputData('')
   };
 

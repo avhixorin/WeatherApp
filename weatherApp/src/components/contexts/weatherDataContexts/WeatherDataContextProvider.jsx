@@ -1,110 +1,131 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useContext } from 'react';
 import WeatherDataContext from './WeatherDataContext';
 
+
 const WeatherDataContextProvider = ({ children }) => {
-  const [currentData, setCurrentData] = useState({ latitude: null, longitude: null });
-  const [weatherData, setWeatherData] = useState({});
+  const [searchCityWeatherData, setSearchCityWeatherData] = useState({});
   const [searchValue, setSearchValue] = useState('');
-  const [aqiData, setAqiData] = useState({});
-  const [searchCityLat, setSearchCityLat] = useState(19.4356603);
-  const [searchCityLon, setSearchCityLon] = useState(72.8160861);
+  const [currentLat, setCurrentLat] = useState('');
+  const [currentLon, setCurrentLon] = useState('');
+  const [currentCity, setCurrentCity] = useState('');
+  const [currentCityWeather, setCurrentCityWeather] = useState({});
+  
   const weatherApiKey = '9bc95084cf36e36a4f031a0a9debbb41';
 
   const defaultLat = 19.4356603;
   const defaultLon = 72.8160861;
 
-  const getCurrentLocation = async () => {
+  useEffect(() => {
+    getCurrentCoords();
+  }, []);
+
+  useEffect(() => {
+    if (currentLat && currentLon) {
+      getCurrentCity(currentLat, currentLon);
+    } else {
+      setCurrentLat(defaultLat);
+      setCurrentLon(defaultLon);
+    }
+  }, [currentLat, currentLon]);
+
+  useEffect(() => {
+    if (currentCity) {
+      getCurrentLocationWeatherData(currentCity);
+    }
+  }, [currentCity]);
+
+  useEffect(() => {
+    if (searchValue) {
+      getSearchCityWeatherData(searchValue);
+    }
+  }, [searchValue]);
+
+  const getCurrentCoords = async () => {
     if (navigator.geolocation) {
       try {
         const position = await new Promise((resolve, reject) => {
           navigator.geolocation.getCurrentPosition(resolve, reject);
         });
-        setCurrentData({ latitude: position.coords.latitude, longitude: position.coords.longitude });
+        setCurrentLat(position.coords.latitude);
+        setCurrentLon(position.coords.longitude);
       } catch (error) {
         console.error('Error getting position:', error);
-        setCurrentData({ latitude: defaultLat, longitude: defaultLon });
       }
     } else {
       console.error('Geolocation is not supported by this browser.');
-      setCurrentData({ latitude: defaultLat, longitude: defaultLon });
     }
   };
 
-  const fetchWeatherData = async (latitude, longitude) => {
-    const weatherApiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${weatherApiKey}&units=metric`;
+  const getCurrentCity = async (lat, lon) => {
+    const getCurrentCityApiUrl = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=10`;
     try {
-      const response = await fetch(weatherApiUrl);
+      const response = await fetch(getCurrentCityApiUrl);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
       const data = await response.json();
-      setWeatherData(data);
+      setCurrentCity(data.address.city || data.address.town || data.address.village || 'City not found');
+    } catch (error) {
+      console.error('Error fetching city data:', error);
+    }
+  };
+
+  const getCurrentLocationWeatherData = async (currentCity) => {
+    const getCurrentLocationWeatherData = `https://api.openweathermap.org/data/2.5/weather?q=${currentCity}&appid=${weatherApiKey}&units=metric`;
+    try {
+      const response = await fetch(getCurrentLocationWeatherData);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      setCurrentCityWeather({
+        currentTemperature: data.main.temp,
+        aqi: data.main.pressure,
+        weatherDescription: data.weather[0].description,
+        feelsLike: data.main.feels_like,
+        cityName: data.name,
+        countryName: data.sys.country,
+        windSpeed: data.wind.speed,
+        humidity: data.main.humidity
+      });
     } catch (error) {
       console.error('Error fetching weather data:', error);
     }
   };
 
-  const fetchAqiData = async (lat, lon) => {
-    const aqiApiUrl = `http://api.openweathermap.org/data/2.5/air_pollution/history?lat=${lat}&lon=${lon}&start=1606223802&end=1606482999&appid=${weatherApiKey}`;
+  const getSearchCityWeatherData = async (searchValue) => {
+    const getSearchCityWeatherDataUrl = `https://api.openweathermap.org/data/2.5/weather?q=${searchValue}&appid=${weatherApiKey}&units=metric`;
     try {
-      const response = await fetch(aqiApiUrl);
+      const response = await fetch(getSearchCityWeatherDataUrl);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
       const data = await response.json();
-      setAqiData(data);
+      setSearchCityWeatherData({
+        currentTemperature: data.main.temp,
+        aqi: data.main.pressure,
+        weatherDescription: data.weather[0].description,
+        feelsLike: data.main.feels_like,
+        cityName: data.name,
+        countryName: data.sys.country,
+        windSpeed: data.wind.speed,
+        humidity: data.main.humidity
+      });
     } catch (error) {
-      console.error('Error fetching AQI data:', error);
+      console.error('Error fetching weather data:', error);
     }
   };
 
-  useEffect(() => {
-    getCurrentLocation();
-  }, []);
-
-  useEffect(() => {
-    if (currentData.latitude && currentData.longitude) {
-      fetchWeatherData(currentData.latitude, currentData.longitude);
-      fetchAqiData(currentData.latitude, currentData.longitude);
-    }
-  }, [currentData]);
-
-  useEffect(() => {
-    if (searchValue.trim() !== '') {
-      fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(searchValue)}&limit=5&appid=${weatherApiKey}`)
-        .then(res => res.json())
-        .then((data) => {
-          if (data.length > 0) {
-            setSearchCityLat(data[0].lat);
-            setSearchCityLon(data[0].lon);
-          } else {
-            console.log('City not found');
-          }
-        })
-        .catch(error => {
-          console.error('Error fetching city data:', error);
-        });
-    }
-  }, [searchValue]);
-
-  useEffect(() => {
-    if (searchCityLat !== null && searchCityLon !== null) {
-      fetchWeatherData(searchCityLat, searchCityLon);
-      fetchAqiData(searchCityLat, searchCityLon);
-    }
-  }, [searchCityLat, searchCityLon]);
-
   const contextValue = useMemo(() => ({
-    currentData,
-    weatherData,
-    setCurrentData,
+    searchCityWeatherData,
     searchValue,
     setSearchValue,
-    searchCityLat,
-    searchCityLon,
-    aqiData
-  }), [currentData, weatherData, searchValue, searchCityLat, searchCityLon, aqiData]);
-
+    currentLat,
+    currentLon,
+    currentCity,
+    currentCityWeather
+  }), [searchCityWeatherData, searchValue, currentLat, currentLon, currentCity, currentCityWeather]);
+  
   return (
     <WeatherDataContext.Provider value={contextValue}>
       {children}

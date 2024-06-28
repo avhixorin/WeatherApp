@@ -2,6 +2,7 @@
 import CurrentData from "./components/CurrentData/CurrentData.jsx"
 import ForcastData from "./components/ForcastData/ForcastData.jsx"
 import Header from "./components/Header/Header.jsx"
+import { ForecastProvider } from "./components/contexts/forecastContext/ForecastContext.jsx"
 import { SearchProvider } from "./components/contexts/searchContexts/SearchContext.jsx"
 import WeatherDataContextProvider from "./components/contexts/weatherDataContexts/WeatherDataContextProvider.jsx"
 
@@ -15,6 +16,7 @@ function App() {
   return (
     <WeatherDataContextProvider>
       <SearchProvider >
+        <ForecastProvider>
           <div className="w-full h-full bg-page-bg bg-cover bg-center flex flex-col ">
               <div className="w-full h-[14%]">
                 <Header />
@@ -23,11 +25,12 @@ function App() {
                   <div className="w-1/2 h-full flex justify-center items-center">
                       <CurrentData/>
                   </div>
-                  <div className="w-1/2 h-full z-10">
+                  <div className="w-1/2 h-full flex justify-start items-center">
                       <ForcastData />
                   </div>
               </div>
           </div>
+        </ForecastProvider>
       </SearchProvider>
     </WeatherDataContextProvider>
   )

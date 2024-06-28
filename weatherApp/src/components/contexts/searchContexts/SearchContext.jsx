@@ -1,4 +1,3 @@
-// SearchContext.js
 import { createContext, useState, useCallback, useEffect, useMemo, useContext } from 'react';
 import debounce from 'lodash/debounce';
 import WeatherDataContext from '../weatherDataContexts/WeatherDataContext';
@@ -21,7 +20,7 @@ const SearchProvider = ({ children }) => {
       const data = await response.json();
       if (data.geonames.length > 0) setCityData(data.geonames);
     } catch (error) {
-      console.error('Error fetching AQI data:', error);
+      console.error('Error fetching city data:', error);
     }
   }, [userName]);
 
@@ -36,29 +35,27 @@ const SearchProvider = ({ children }) => {
       setShowSuggestions(false);
     }
   }, [inputData, debouncedFetchCityData]);
-  const {setSearchValue} = useContext(WeatherDataContext)
+
+  const { setSearchValue } = useContext(WeatherDataContext);
+
   const handleSuggestionClick = (city) => {
     setInputData(city);
     setShowSuggestions(false);
     setSearchValue(city);
   };
-  
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-    fetchCityData(inputData);
-    setShowSuggestions(false);
-    
-  };
+
+
 
   return (
-    <SearchContext.Provider value={{
-      inputData,
-      setInputData,
-      cityData,
-      showSuggestions,
-      handleSuggestionClick,
-      handleSearchSubmit
-    }}>
+    <SearchContext.Provider
+      value={{
+        inputData,
+        setInputData,
+        cityData,
+        showSuggestions,
+        handleSuggestionClick
+      }}
+    >
       {children}
     </SearchContext.Provider>
   );
