@@ -7,8 +7,8 @@ function Header() {
   return (
     <div className='w-full h-full flex flex-row'>
         <div className='w-1/2 h-full flex items-end justify-center'>
-            <p className='w-4/5'>
-                <a href="https://github.com/avhixorin" className='w-4/5 font-bold text-white text-lg pl-[10%] hover:text-slate-400'>avhixorin</a>
+            <p className='w-4/5 font-oleo'>
+                <a href="https://github.com/avhixorin" className='w-4/5 font-thin text-white text-2xl pl-[10%] hover:text-slate-400'>avhixorin</a>
             </p>
         </div>
         <div className='w-1/2 h-full flex flex-row'>

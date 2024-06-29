@@ -1,4 +1,4 @@
-import { useContext } from "react";
+
 import CurrentData from "./components/CurrentData/CurrentData.jsx";
 import ForcastData from "./components/ForcastData/ForcastData.jsx";
 import Header from "./components/Header/Header.jsx";
@@ -19,7 +19,7 @@ function App() {
             <div className="w-full h-[14%]">
               <Header />
             </div>
-            <div className="w-full h-[86%] flex flex-row ">
+            <div className="w-full h-[86%] flex flex-row font-playwrite">
               <div className="w-1/2 h-full flex justify-center items-center">
                 <CurrentData />
               </div>

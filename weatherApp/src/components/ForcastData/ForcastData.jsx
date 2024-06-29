@@ -9,26 +9,12 @@ function ForecastData() {
 
   // Destructure currentCityWeather
   const {
-    currentTemperature: currentTemp,
-    aqi: currentAqi,
-    weatherDescription: currentWeatherDesc,
-    feelsLike: currentFeelsLike,
-    cityName: currentCityName,
-    countryName: currentCountryName,
     windSpeed: currentWindSpeed,
-    humidity: currentHumidity
   } = currentCityWeather || {};
 
   // Destructure searchCityWeatherData
   const {
-    currentTemperature: searchTemp,
-    aqi: searchAqi,
-    weatherDescription: searchWeatherDesc,
-    feelsLike: searchFeelsLike,
-    cityName: searchCityName,
-    countryName: searchCountryName,
     windSpeed: searchWindSpeed,
-    humidity: searchHumidity
   } = searchCityWeatherData || {};
 
   const getWeatherIcon = (description, windSpeed) => {
@@ -68,7 +54,7 @@ function ForecastData() {
   }
 
   return (
-    <div className='w-4/5 h-[75%] bg-white bg-opacity-5 backdrop-blur-lg rounded-2xl flex justify-center items-center'>
+    <div className='w-[90%] h-[75%] bg-white bg-opacity-5 backdrop-blur-lg rounded-2xl flex justify-center items-center'>
       <div className="w-[90%] h-[90%] rounded-lg bg-transparent">
         <div className="w-full h-[15%] bg-transparent flex items-center">
           <p className="text-white text-xl">5-Day forecast of - { (searchValue || currentCity || 'London').toUpperCase() }</p>
@@ -89,7 +75,7 @@ function ForecastData() {
                 <div className="w-[40%] h-full flex items-center justify-start text-white text-[1.1rem]">
                   {day.weather.description}
                 </div>
-                <div className="w-[25%] h-full flex items-center justify-start text-white text-lg">
+                <div className="w-[25%] h-full flex items-center justify-start text-white text-[1rem]">
                   H: {Math.floor(day.high_temp)}°C | L: {Math.floor(day.low_temp)}°C
                 </div>
               </li>

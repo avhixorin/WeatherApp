@@ -12,9 +12,12 @@ export default {
       },
       height:{
         '90':'90%'
-      }
+      },
+      fontFamily: {
+        oleo: ['"Oleo Script"', 'cursive'],
+        'playwrite': ['"Playwrite DE Grund"', 'cursive'],
+      },
     },
   },
   plugins: [],
 }
-
