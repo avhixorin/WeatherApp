@@ -2,7 +2,7 @@
 function ThunderSvg() {
   return (
 
-<svg width="100px" height="100px" viewBox="0 0 24 24" role="img" xmlns="http://www.w3.org/2000/svg" aria-labelledby="thunderIconTitle" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" color="#000000">
+<svg width="100px" height="100px" viewBox="0 0 24 24" role="img" xmlns="http://www.w3.org/2000/svg" aria-labelledby="thunderIconTitle" stroke="#00000090" className="dark:stroke-white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" color="#000000">
 
 <g id="SVGRepo_bgCarrier" strokeWidth="0"/>
 

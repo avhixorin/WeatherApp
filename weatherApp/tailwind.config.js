@@ -4,10 +4,12 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       backgroundImage:{
-        'page-bg': 'url("../src/assets/sunSet-bg.jpg")',
+        'dark-bg': 'url("../src/assets/dark.jpg")',
+        'light-bg': 'url("../src/assets/light3.jpg")',
         'load-bg': 'url("../src/components/Loading/CloudLoading.gif")'
       },
       height:{

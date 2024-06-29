@@ -2,7 +2,7 @@
 function CloudySvg() {
   return (
 
-<svg fill="#ffffff" height="100px" width="100px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="-48.5 -48.5 582.00 582.00" xmlSpace="preserve" stroke="#ffffff" strokeWidth="0.00485" transform="rotate(0)">
+<svg fill="#00000090" className="dark:fill-white" height="100px" width="100px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="-48.5 -48.5 582.00 582.00" xmlSpace="preserve"  stroke="#ffffff" strokeWidth="0.00485" transform="rotate(0)">
 
 <g id="SVGRepo_bgCarrier" strokeWidth="0"/>
 
