@@ -1,6 +1,6 @@
-import { useEffect, useState, useMemo, useContext } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import WeatherDataContext from './WeatherDataContext';
-
+import Loading from '../../Loading/Loading';
 
 const WeatherDataContextProvider = ({ children }) => {
   const [searchCityWeatherData, setSearchCityWeatherData] = useState({});
@@ -9,7 +9,8 @@ const WeatherDataContextProvider = ({ children }) => {
   const [currentLon, setCurrentLon] = useState('');
   const [currentCity, setCurrentCity] = useState('');
   const [currentCityWeather, setCurrentCityWeather] = useState({});
-  
+  const [locationGranted, setLocationGranted] = useState(false);
+
   const weatherApiKey = '9bc95084cf36e36a4f031a0a9debbb41';
 
   const defaultLat = 19.4356603;
@@ -48,11 +49,18 @@ const WeatherDataContextProvider = ({ children }) => {
         });
         setCurrentLat(position.coords.latitude);
         setCurrentLon(position.coords.longitude);
+        setLocationGranted(true);
       } catch (error) {
         console.error('Error getting position:', error);
+        setCurrentLat(defaultLat);
+        setCurrentLon(defaultLon);
+        setLocationGranted(false);
       }
     } else {
       console.error('Geolocation is not supported by this browser.');
+      setCurrentLat(defaultLat);
+      setCurrentLon(defaultLon);
+      setLocationGranted(false);
     }
   };
 
@@ -70,14 +78,23 @@ const WeatherDataContextProvider = ({ children }) => {
     }
   };
 
-  const getCurrentLocationWeatherData = async (currentCity) => {
-    const getCurrentLocationWeatherData = `https://api.openweathermap.org/data/2.5/weather?q=${currentCity}&appid=${weatherApiKey}&units=metric`;
+  const fetchWeatherData = async (url) => {
     try {
-      const response = await fetch(getCurrentLocationWeatherData);
+      const response = await fetch(url);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-      const data = await response.json();
+      return await response.json();
+    } catch (error) {
+      console.error('Error fetching weather data:', error);
+      return null;
+    }
+  };
+
+  const getCurrentLocationWeatherData = async (currentCity) => {
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${currentCity}&appid=${weatherApiKey}&units=metric`;
+    const data = await fetchWeatherData(url);
+    if (data) {
       setCurrentCityWeather({
         currentTemperature: data.main.temp,
         aqi: data.main.pressure,
@@ -88,19 +105,13 @@ const WeatherDataContextProvider = ({ children }) => {
         windSpeed: data.wind.speed,
         humidity: data.main.humidity
       });
-    } catch (error) {
-      console.error('Error fetching weather data:', error);
     }
   };
 
   const getSearchCityWeatherData = async (searchValue) => {
-    const getSearchCityWeatherDataUrl = `https://api.openweathermap.org/data/2.5/weather?q=${searchValue}&appid=${weatherApiKey}&units=metric`;
-    try {
-      const response = await fetch(getSearchCityWeatherDataUrl);
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const data = await response.json();
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${searchValue}&appid=${weatherApiKey}&units=metric`;
+    const data = await fetchWeatherData(url);
+    if (data) {
       setSearchCityWeatherData({
         currentTemperature: data.main.temp,
         aqi: data.main.pressure,
@@ -111,8 +122,6 @@ const WeatherDataContextProvider = ({ children }) => {
         windSpeed: data.wind.speed,
         humidity: data.main.humidity
       });
-    } catch (error) {
-      console.error('Error fetching weather data:', error);
     }
   };
 
@@ -123,12 +132,13 @@ const WeatherDataContextProvider = ({ children }) => {
     currentLat,
     currentLon,
     currentCity,
-    currentCityWeather
-  }), [searchCityWeatherData, searchValue, currentLat, currentLon, currentCity, currentCityWeather]);
-  
+    currentCityWeather,
+    locationGranted,
+  }), [searchCityWeatherData, searchValue, currentLat, currentLon, currentCity, currentCityWeather, locationGranted]);
+
   return (
     <WeatherDataContext.Provider value={contextValue}>
-      {children}
+      {locationGranted ? children : <Loading />}
     </WeatherDataContext.Provider>
   );
 };

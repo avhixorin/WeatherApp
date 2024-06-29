@@ -32,7 +32,6 @@ function ForecastData() {
   } = searchCityWeatherData || {};
 
   const getWeatherIcon = (description, windSpeed) => {
-    // Adjust wind condition to show windy icon if wind speed is significant
     if (windSpeed >= 10) return <WindySvg />;
 
     switch (description?.toLowerCase()) {
@@ -49,7 +48,8 @@ function ForecastData() {
       case 'heavy intensity rain':
         return <RainySvg />;
       case 'thunderstorm':
-      case 'Thunderstorm with rain':
+      case 'thunderstorm with rain':
+      case 'thunderstorm with heavy rain':
         return <ThunderSvg />;
       case 'hazy':
       case 'haze':
@@ -71,7 +71,7 @@ function ForecastData() {
     <div className='w-4/5 h-[75%] bg-white bg-opacity-5 backdrop-blur-lg rounded-2xl flex justify-center items-center'>
       <div className="w-[90%] h-[90%] rounded-lg bg-transparent">
         <div className="w-full h-[15%] bg-transparent flex items-center">
-          <p className="text-white text-xl">5-Day forecast of - { searchValue.toUpperCase() || currentCity.toUpperCase() || 'London'}</p>
+          <p className="text-white text-xl">5-Day forecast of - { (searchValue || currentCity || 'London').toUpperCase() }</p>
         </div>
 
         <hr className="border-t-1 border-gray-400 rounded-lg w-full" />
@@ -80,16 +80,16 @@ function ForecastData() {
           <ul className="w-full h-full flex flex-col justify-evenly">
             {forecastData.data.map((day, index) => (
               <li key={index} className="w-full h-full flex justify-between">
-                <div className="w-[25%] h-full flex items-center justify-start text-white text-xl">
+                <div className="w-[20%] h-full flex items-center justify-start text-white text-lg">
                   {new Date(day.datetime).toLocaleDateString(undefined, { weekday: 'long' })}
                 </div>
-                <div className="w-[15%] h-full flex items-center justify-start text-white text-xl">
+                <div className="w-[15%] h-full flex items-center justify-start text-white text-lg">
                   {getWeatherIcon(day.weather.description, currentWindSpeed || searchWindSpeed)}
                 </div>
-                <div className="w-[35%] h-full flex items-center justify-start text-white text-xl">
+                <div className="w-[40%] h-full flex items-center justify-start text-white text-[1.1rem]">
                   {day.weather.description}
                 </div>
-                <div className="w-[25%] h-full flex items-center justify-start text-white text-xl">
+                <div className="w-[25%] h-full flex items-center justify-start text-white text-lg">
                   H: {Math.floor(day.high_temp)}°C | L: {Math.floor(day.low_temp)}°C
                 </div>
               </li>

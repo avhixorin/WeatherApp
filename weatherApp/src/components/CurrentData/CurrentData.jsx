@@ -45,11 +45,13 @@ const CurrentData = () => {
       case 'rain':
       case 'moderate rain':
       case 'heavy intensity rain':
+      case 'light intensity shower rain':
         return <RainySvg />;
       case 'thunderstorm':
         return <ThunderSvg />;
       case 'hazy':
       case 'haze':
+      case 'mist':
         return <HazySvg />;
       default:
         return <CloudySvg />;

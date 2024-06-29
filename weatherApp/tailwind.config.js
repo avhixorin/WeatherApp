@@ -7,7 +7,8 @@ export default {
   theme: {
     extend: {
       backgroundImage:{
-        'page-bg': 'url("../src/assets/sunSet-bg.jpg")'
+        'page-bg': 'url("../src/assets/sunSet-bg.jpg")',
+        'load-bg': 'url("../src/components/Loading/CloudLoading.gif")'
       },
       height:{
         '90':'90%'
