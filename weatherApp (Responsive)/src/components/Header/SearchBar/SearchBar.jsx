@@ -27,7 +27,7 @@ function SearchBar() {
             <input 
               type="search" 
               id="default-search" 
-              className="block w-full p-4 pl-10 text-sm text-black
+              className="block w-full p-4 pl-10 text-sm text-white
                         placeholder-gray-600 
                           bg-opacity-10 backdrop-blur-[2px]
                          border border-gray-300 rounded-lg bg-transparent 
