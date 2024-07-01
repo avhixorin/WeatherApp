@@ -9,7 +9,7 @@ export default {
     extend: {
       backgroundImage:{
         'dark-bg': 'url("../src/assets/dark.jpg")',
-        'light-bg': 'url("../src/assets/light3.jpg")',
+        'light-bg': 'url("../src/assets/light.jpg")',
         'load-bg': 'url("../src/components/Loading/CloudLoading.gif")'
       },
       height:{
