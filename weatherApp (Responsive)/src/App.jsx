@@ -63,7 +63,7 @@ function App() {
                 <div className="w-[25%] md:w-1/2 lg:hidden h-full flex justify-center items-center relative">
                   <img
                     className="w-[30px] h-[30px] md:hidden"
-                    src="./src/assets/bars.png"
+                    src="./src/assets/bar.png"
                     alt=""
                     onClick={handleBarClick}
                   />
