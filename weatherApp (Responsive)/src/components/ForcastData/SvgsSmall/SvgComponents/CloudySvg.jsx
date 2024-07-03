@@ -1,7 +1,7 @@
 function CloudySvg() {
   return (
     <svg
-      fill="#071952" 
+      fill="#E0E0E0" 
       className="dark:fill-white"
       height="45px"
       width="45px"

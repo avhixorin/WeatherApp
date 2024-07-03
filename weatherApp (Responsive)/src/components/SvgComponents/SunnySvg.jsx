@@ -3,7 +3,7 @@
 const SunnySvg = () => (
   
   
-    <svg width="100px" height="100px" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" fill="#00000090" className="dark:fill-white" stroke="#ffffff">
+    <svg width="100px" height="100px" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" fill="#E0E0E0" className="dark:fill-white" stroke="#ffffff">
     <g id="SVGRepo_bgCarrier" strokeWidth="0"/>
     <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"/>
     <g id="SVGRepo_iconCarrier">

@@ -2,7 +2,7 @@
 function WindySvg() {
   return (
 
-<svg width="70px" height="70px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#00000090" className="dark:stroke-white">
+<svg width="70px" height="70px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#E0E0E0" className="dark:stroke-white">
 
 <g id="SVGRepo_bgCarrier" strokeWidth="0"/>
 

@@ -11,7 +11,8 @@ const WeatherDataContextProvider = ({ children }) => {
   const [currentCityWeather, setCurrentCityWeather] = useState({});
   const [locationGranted, setLocationGranted] = useState(false);
 
-  const weatherApiKey = '9bc95084cf36e36a4f031a0a9debbb41';
+  
+  const weatherApiKey = '9bc95084cf36e36a4f031a0a9debbb41'
 
   const defaultLat = 19.4356603;
   const defaultLon = 72.8160861;

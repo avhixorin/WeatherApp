@@ -3,7 +3,7 @@ import React from 'react'
 function HazySvg() {
   return (
 
-<svg fill="#071952" className="dark:fill-white" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 32.00 32.00" xmlSpace="preserve" height="45px" width="45px" stroke="#ffffff" strokeWidth="0.00032">
+<svg fill="#E0E0E0" className="dark:fill-white" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 32.00 32.00" xmlSpace="preserve" height="45px" width="45px" stroke="#ffffff" strokeWidth="0.00032">
     <g id="SVGRepo_bgCarrier" strokeWidth="0"/>
     <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round" stroke="#CCCCCC" strokeWidth="0.064"/>
     <g id="SVGRepo_iconCarrier"> 
