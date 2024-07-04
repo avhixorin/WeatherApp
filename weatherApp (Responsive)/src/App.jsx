@@ -123,7 +123,7 @@ function App() {
                 </div>
                 <div className="w-full h-full hidden md:block lg:hidden">
                   <div className="w-full h-[80%] flex flex-row justify-center items-center">
-                    <div className="w-[40%] h-[75%] grid place-items-center">
+                    <div className="w-[40%] h-[75%] md:max-h-[360px] lg:h-[75%] grid place-items-center">
                       <CurrentData />
                     </div>
                     <div className="flex-grow h-full grid place-items-center rounded-2xl">
