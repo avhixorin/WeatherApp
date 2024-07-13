@@ -17,7 +17,7 @@ const ForecastProvider = ({ children }) => {
             setError(null);
 
             try {
-                // Determine the city to fetch data for (searchValue or currentCity)
+                
                 const cityToFetch = searchValue || currentCity || 'London'; // Fallback to 'London' if both searchValue and currentCity are falsy
                 const forecastUrl = `https://api.weatherbit.io/v2.0/forecast/daily?city=${cityToFetch}&key=${apiKey}&days=5`;
                 const response = await fetch(forecastUrl);
@@ -44,7 +44,7 @@ const ForecastProvider = ({ children }) => {
         fetchForecast();
     }, [searchValue, currentCity]);
 
-    // Memoize the context value to optimize performance
+    
     const contextValue = useMemo(() => ({
         forecastData,
         isLoading,
