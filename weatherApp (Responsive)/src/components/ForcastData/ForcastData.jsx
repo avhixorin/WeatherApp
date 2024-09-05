@@ -63,23 +63,23 @@ function ForecastData() {
 
         <div className="w-full h-[85%] bg-transparent py-4">
           <ul className="w-full h-full flex flex-col justify-evenly">
-            {forecastData.data.map((day, index) => (
+            {forecastData.list.map((day, index) => (
               <li key={index} className="w-full h-full flex justify-between">
                 <div className="w-[10%] md:hidden h-full flex items-center justify-start text-gray-300 text-base md:text-lg dark:text-gray-100">
-                  {new Date(day.datetime).toLocaleDateString(undefined, { weekday: 'long' }).slice(0, 3)}
+                  {new Date(day.dt_txt).toLocaleDateString(undefined, { weekday: 'long' }).slice(0, 3)}
                 </div>
                 <div className="hidden w-[20%] md:block h-full flex items-center justify-start text-gray-300 text-base md:text-lg dark:text-gray-100">
-                  {new Date(day.datetime).toLocaleDateString(undefined, { weekday: 'long' })}
+                  {new Date(day.dt_txt).toLocaleDateString(undefined, { weekday: 'long' })}
                 </div>
 
                 <div className="w-[15%] hidden lg:block h-full flex items-center justify-start text-gray-300 dark:text-gray-100">
-                  {getWeatherIcon(day.weather.description, currentWindSpeed || searchWindSpeed)}
+                  {getWeatherIcon(day.weather[0].description, currentWindSpeed || searchWindSpeed)}
                 </div>
                 <div className="w-[90%] md:w-[40%] h-full flex items-center justify-end md:justify-start text-gray-300 text-base md:text-[1.1rem] dark:text-gray-100">
-                  {day.weather.description}
+                  {day.weather[0].description}
                 </div>
                 <div className="w-[25%] hidden md:block h-full flex items-center justify-start text-gray-300 text-[1rem] dark:text-gray-100">
-                  H: {Math.floor(day.high_temp)}°C | L: {Math.floor(day.low_temp)}°C
+                  H: {Math.floor(day.main.temp_max)}°C | L: {Math.floor(day.main.temp_min)}°C
                 </div>
               </li>
             ))}

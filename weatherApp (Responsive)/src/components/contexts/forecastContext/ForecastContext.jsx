@@ -43,11 +43,7 @@ const ForecastProvider = ({ children }) => {
     }, [searchValue, currentCity, apiKey]);
 
     
-    useEffect(() => {
-        if (Object.keys(forecastData).length > 0) {
-            console.log(forecastData);
-        }
-    }, [forecastData]);
+    
 
     
     const contextValue = useMemo(() => ({
