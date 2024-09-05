@@ -23,7 +23,7 @@ const ForecastProvider = ({ children }) => {
 <<<<<<< HEAD
                 const cityToFetch = searchValue || currentCity || 'London'; 
 =======
-                const cityToFetch = searchValue || currentCity || 'London'; // Fallback to 'London' if both searchValue and currentCity are falsy
+                const cityToFetch = searchValue || currentCity || 'London'; 
 >>>>>>> b6053fba414aee44b9e05764ad787024300812c7
                 const forecastUrl = `https://api.weatherbit.io/v2.0/forecast/daily?city=${cityToFetch}&key=${apiKey}&days=5`;
                 const response = await fetch(forecastUrl);
