@@ -2,7 +2,7 @@ import { createContext, useState, useEffect, useMemo, useContext } from "react";
 import WeatherDataContext from "../weatherDataContexts/WeatherDataContext";
 
 const apiKey = import.meta.env.WEATHERBIT_API_KEY;
-console.log(apiKey)
+
 const ForecastContext = createContext();
 
 const ForecastProvider = ({ children }) => {
