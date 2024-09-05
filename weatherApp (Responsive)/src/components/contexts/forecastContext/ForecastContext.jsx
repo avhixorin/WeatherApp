@@ -1,17 +1,15 @@
 import { createContext, useState, useEffect, useMemo, useContext } from "react";
 import WeatherDataContext from "../weatherDataContexts/WeatherDataContext";
 
-const apiKey = import.meta.env.WEATHERBIT_API_KEY;
-
 const ForecastContext = createContext();
 
 const ForecastProvider = ({ children }) => {
     const { searchValue, currentCity } = useContext(WeatherDataContext);
+    const apiKey = import.meta.env.VITE_DAYSFORCASTKEY;
 
     const [forecastData, setForecastData] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
-  
 
     useEffect(() => {
         const fetchForecast = async () => {
@@ -19,23 +17,17 @@ const ForecastProvider = ({ children }) => {
             setError(null);
 
             try {
-                
-<<<<<<< HEAD
-                const cityToFetch = searchValue || currentCity || 'London'; 
-=======
-                const cityToFetch = searchValue || currentCity || 'London'; 
->>>>>>> b6053fba414aee44b9e05764ad787024300812c7
-                const forecastUrl = `https://api.weatherbit.io/v2.0/forecast/daily?city=${cityToFetch}&key=${apiKey}&days=5`;
+                const cityToFetch = searchValue || currentCity || 'Mumbai';
+                const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${cityToFetch}&appid=${apiKey}&units=metric&cnt=5`;
                 const response = await fetch(forecastUrl);
-                
+
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                
+
                 const data = await response.json();
-                
-                
-                if (data && data.data && data.data.length > 0) {
+
+                if (data.list.length > 0) {
                     setForecastData(data);
                 } else {
                     throw new Error('Incomplete data received from API');
@@ -48,7 +40,14 @@ const ForecastProvider = ({ children }) => {
         };
 
         fetchForecast();
-    }, [searchValue, currentCity]);
+    }, [searchValue, currentCity, apiKey]);
+
+    
+    useEffect(() => {
+        if (Object.keys(forecastData).length > 0) {
+            console.log(forecastData);
+        }
+    }, [forecastData]);
 
     
     const contextValue = useMemo(() => ({
