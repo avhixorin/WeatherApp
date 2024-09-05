@@ -5,7 +5,7 @@ const ForecastContext = createContext();
 
 const ForecastProvider = ({ children }) => {
     const { searchValue, currentCity } = useContext(WeatherDataContext);
-    const apiKey = import.meta.env.VITE_DAYSFORCASTKEY; // Vite environment variable
+    const apiKey = import.meta.env.VITE_DAYSFORCASTKEY;
 
     const [forecastData, setForecastData] = useState({});
     const [isLoading, setIsLoading] = useState(true);
@@ -17,7 +17,7 @@ const ForecastProvider = ({ children }) => {
             setError(null);
 
             try {
-                const cityToFetch = searchValue || currentCity || 'Mumbai'; // Default to 'Mumbai'
+                const cityToFetch = searchValue || currentCity || 'Mumbai';
                 const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${cityToFetch}&appid=${apiKey}&units=metric&cnt=5`;
                 const response = await fetch(forecastUrl);
 
@@ -42,14 +42,14 @@ const ForecastProvider = ({ children }) => {
         fetchForecast();
     }, [searchValue, currentCity, apiKey]);
 
-    // Log forecastData after it has been updated
+    
     useEffect(() => {
         if (Object.keys(forecastData).length > 0) {
             console.log(forecastData);
         }
     }, [forecastData]);
 
-    // Memoize the context value to optimize performance
+    
     const contextValue = useMemo(() => ({
         forecastData,
         isLoading,
