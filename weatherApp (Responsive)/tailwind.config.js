@@ -16,7 +16,7 @@ export default {
         '90':'90%'
       },
       fontFamily: {
-        oleo: ['"Oleo Script"', 'cursive'],
+        'oleo': ['"Oleo Script"', 'cursive'],
         'playwrite': ['"Playwrite DE Grund"', 'cursive'],
       },
     },

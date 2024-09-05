@@ -5,11 +5,11 @@ const ForecastContext = createContext();
 
 const ForecastProvider = ({ children }) => {
     const { searchValue, currentCity } = useContext(WeatherDataContext);
+    const apiKey = import.meta.env.VITE_DAYSFORCASTKEY; // Vite environment variable
 
     const [forecastData, setForecastData] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
-    const apiKey = '38acd91579d649f2b3401de1a0403e55';
 
     useEffect(() => {
         const fetchForecast = async () => {
@@ -17,19 +17,17 @@ const ForecastProvider = ({ children }) => {
             setError(null);
 
             try {
-                // Determine the city to fetch data for (searchValue or currentCity)
-                const cityToFetch = searchValue || currentCity || 'London'; // Fallback to 'London' if both searchValue and currentCity are falsy
-                const forecastUrl = `https://api.weatherbit.io/v2.0/forecast/daily?city=${cityToFetch}&key=${apiKey}&days=5`;
+                const cityToFetch = searchValue || currentCity || 'Mumbai'; // Default to 'Mumbai'
+                const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${cityToFetch}&appid=${apiKey}&units=metric&cnt=5`;
                 const response = await fetch(forecastUrl);
-                
+
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                
+
                 const data = await response.json();
-                
-                // Ensure data is complete before setting state
-                if (data && data.data && data.data.length > 0) {
+
+                if (data.list.length > 0) {
                     setForecastData(data);
                 } else {
                     throw new Error('Incomplete data received from API');
@@ -42,7 +40,14 @@ const ForecastProvider = ({ children }) => {
         };
 
         fetchForecast();
-    }, [searchValue, currentCity]);
+    }, [searchValue, currentCity, apiKey]);
+
+    // Log forecastData after it has been updated
+    useEffect(() => {
+        if (Object.keys(forecastData).length > 0) {
+            console.log(forecastData);
+        }
+    }, [forecastData]);
 
     // Memoize the context value to optimize performance
     const contextValue = useMemo(() => ({

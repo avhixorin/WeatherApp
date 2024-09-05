@@ -1,6 +1,8 @@
 import { createContext, useState, useEffect, useMemo, useContext } from "react";
 import WeatherDataContext from "../weatherDataContexts/WeatherDataContext";
 
+const apiKey = import.meta.env.WEATHERBIT_API_KEY;
+console.log(apiKey)
 const ForecastContext = createContext();
 
 const ForecastProvider = ({ children }) => {
@@ -9,7 +11,7 @@ const ForecastProvider = ({ children }) => {
     const [forecastData, setForecastData] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
-    const apiKey = '38acd91579d649f2b3401de1a0403e55';
+  
 
     useEffect(() => {
         const fetchForecast = async () => {
@@ -17,8 +19,8 @@ const ForecastProvider = ({ children }) => {
             setError(null);
 
             try {
-                // Determine the city to fetch data for (searchValue or currentCity)
-                const cityToFetch = searchValue || currentCity || 'London'; // Fallback to 'London' if both searchValue and currentCity are falsy
+                
+                const cityToFetch = searchValue || currentCity || 'London'; 
                 const forecastUrl = `https://api.weatherbit.io/v2.0/forecast/daily?city=${cityToFetch}&key=${apiKey}&days=5`;
                 const response = await fetch(forecastUrl);
                 
@@ -28,7 +30,7 @@ const ForecastProvider = ({ children }) => {
                 
                 const data = await response.json();
                 
-                // Ensure data is complete before setting state
+                
                 if (data && data.data && data.data.length > 0) {
                     setForecastData(data);
                 } else {
@@ -44,7 +46,7 @@ const ForecastProvider = ({ children }) => {
         fetchForecast();
     }, [searchValue, currentCity]);
 
-    // Memoize the context value to optimize performance
+    
     const contextValue = useMemo(() => ({
         forecastData,
         isLoading,
