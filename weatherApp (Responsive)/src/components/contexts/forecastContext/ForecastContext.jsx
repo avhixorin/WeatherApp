@@ -18,17 +18,27 @@ const ForecastProvider = ({ children }) => {
 
             try {
                 const cityToFetch = searchValue || currentCity || 'Mumbai';
-                const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${cityToFetch}&appid=${apiKey}&units=metric&cnt=5`;
+                
+                // Fetch more than 5 data points to cover full 5-day forecast
+                const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${cityToFetch}&appid=${apiKey}&units=metric&cnt=40`;
                 const response = await fetch(forecastUrl);
 
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    if (response.status === 404) {
+                        throw new Error('City not found');
+                    } else {
+                        throw new Error('Network response was not ok');
+                    }
                 }
 
                 const data = await response.json();
 
-                if (data.list.length > 0) {
-                    setForecastData(data);
+                if (data.list && data.list.length > 0) {
+                    // Filter forecast data to only include one forecast per day (e.g., 12:00 PM)
+                    const filteredData = data.list.filter(forecast => 
+                        new Date(forecast.dt_txt).getHours() === 12
+                    );
+                    setForecastData({ ...data, list: filteredData });
                 } else {
                     throw new Error('Incomplete data received from API');
                 }
@@ -42,10 +52,6 @@ const ForecastProvider = ({ children }) => {
         fetchForecast();
     }, [searchValue, currentCity, apiKey]);
 
-    
-    
-
-    
     const contextValue = useMemo(() => ({
         forecastData,
         isLoading,
